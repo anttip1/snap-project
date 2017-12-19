@@ -1,6 +1,7 @@
 #!usr/bin/env python
 
 import numpy as np
+import networkx as nx
 
 def main():
 	analyze_wiki_vote()
@@ -8,7 +9,9 @@ def main():
 
 def analyze_wiki_vote():
 	data = np.genfromtxt("wiki-Vote.txt", delimiter="\t", comments="#")
-	print(data)
+	G = nx.DiGraph()
+	G.add_edges_from(data)
+	print(G.graph)
 
 
 
