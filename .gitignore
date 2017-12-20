@@ -100,11 +100,13 @@ ENV/
 # mypy
 .mypy_cache/
 
+# network files
 wiki-Vote.txt
 soc-Epinions1.txt
 gplus_combined.txt
 soc-pokec-relationships.txt
 soc-pokec-profiles.txt
 
-
+# Pycharm
+.idea/
 
