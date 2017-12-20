@@ -11,6 +11,9 @@ wget http://snap.stanford.edu/data/gplus_combined.txt.gz
 echo Downloading the soc-Pokec networks:
 wget http://snap.stanford.edu/data/soc-pokec-relationships.txt.gz
 wget http://snap.stanford.edu/data/soc-pokec-profiles.txt.gz
+### soc-LiveJournal1 : 4 847 571 nodes
+echo Downloading the soc-LiveJournal1
+wget http://snap.stanford.edu/data/soc-LiveJournal1.txt.gz
 
 ## Unzip the files
 echo Unzipping the files
@@ -19,3 +22,4 @@ gunzip soc-Epinions1.txt.gz
 gunzip gplus_combined.txt.gz
 gunzip soc-pokec-relationships.txt.gz
 gunzip soc-pokec-profiles.txt.gz
+gunzip soc-LiveJournal1.txt.gz
