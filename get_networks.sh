@@ -33,16 +33,6 @@ else
 fi
 
 ### soc-Pokec: 1 632 803 nodes
-if [ -e soc-pokec-relationships.txt ]
-then
-	echo soc-pokec-relationships.txt already exitsts\!
-else
-	echo Downloading the soc-pokec-relationships network:
-	wget http://snap.stanford.edu/data/soc-pokec-relationships.txt.gz
-	echo Unzipping soc-pokec-relationships.txt.gz
-	gunzip soc-pokec-relationships.txt.gz
-fi
-
 if [ -e soc-pokec-profiles.txt ]
 then
 	echo soc-pokec-profiles.txt already exitsts\!
@@ -51,15 +41,4 @@ else
 	wget http://snap.stanford.edu/data/soc-pokec-profiles.txt.gz
 	echo Unzipping soc-pokec-profiles.txt.gz
 	gunzip soc-pokec-profiles.txt.gz
-fi
-
-### soc-LiveJournal1 : 4 847 571 nodes
-if [ -e soc-LiveJournal1.txt ]
-then
-	echo soc-LiveJournal1.txt already exitsts\!
-else
-	echo Downloading the soc-LiveJournal1 network:
-	wget http://snap.stanford.edu/data/soc-LiveJournal1.txt.gz
-	echo Unzipping soc-LiveJournal1.txt.gz
-	gunzip soc-LiveJournal1.txt.gz
 fi
