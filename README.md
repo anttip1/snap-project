@@ -18,14 +18,12 @@
 * wget http://snap.stanford.edu/data/gplus_combined.txt.gz
 #### soc-Pokec: 1 632 803 nodes
 * wget http://snap.stanford.edu/data/soc-pokec-relationships.txt.gz
-* wget http://snap.stanford.edu/data/soc-pokec-profiles.txt.gz
 
 ### Unzip the files
 * gunzip wiki-Vote.txt.gz
 * gunzip soc-Epinions1.txt.gz
 * gunzip gplus_combined.txt.gz
 * gunzip soc-pokec-relationships.txt.gz
-* gunzip soc-pokec-profiles.txt.gz
 
 
 ## Install python dependencies:
