@@ -33,12 +33,13 @@ else
 fi
 
 ### soc-Pokec: 1 632 803 nodes
-if [ -e soc-pokec-profiles.txt ]
+if [ -e soc-pokec-relationships.txt ]
 then
-	echo soc-pokec-profiles.txt already exitsts\!
+	echo soc-pokec-relationships.txt already exitsts\!
 else
-	echo Downloading the soc-pokec-profiles network:
-	wget http://snap.stanford.edu/data/soc-pokec-profiles.txt.gz
-	echo Unzipping soc-pokec-profiles.txt.gz
-	gunzip soc-pokec-profiles.txt.gz
+	echo Downloading the soc-pokec-relationships network:
+	wget http://snap.stanford.edu/data/soc-pokec-relationships.txt.gz
+	echo Unzipping soc-pokec-relationships.txt.gz
+	gunzip soc-pokec-relationships.txt.gz
 fi
+
