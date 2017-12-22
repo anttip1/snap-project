@@ -41,37 +41,14 @@ def get_subgraph_and_nodes_and_edges(G, node_list):
     edges = H.edges()
     return H, nodes, edges
 
-def get_path_lenghts_SLOWER(G, diameter):
-    start_time = timeit.default_timer()
-    print('\nCalculatin shortest path lenghts for each node pair(slower version)...')
-    shortest_dict = nx.all_pairs_shortest_path(G, cutoff=diameter)
-    print('Time:', timeit.default_timer() - start_time)
-    keyDict = list(range(diameter + 1))
-    path_lengt_dict = (dict([(key, 0) for key in keyDict]))
-    print(path_lengt_dict)
-    start_time = timeit.default_timer()
-    for nodes_distances in shortest_dict.values():
-        for distance in nodes_distances.values():
-            path_lengt_dict[len(distance) -
-                            1] = path_lengt_dict[len(distance) - 1] + 1
-    print('path_lengt_dict:', path_lengt_dict)
-    print('Time:', timeit.default_timer() - start_time)
-    print('done.')
-    return path_lengt_dict
-
 def get_path_lenghts(G, diameter):
     print('\nCalculatin shortest path lenghts for each node pair...')
-    start_time = timeit.default_timer()
     shortest_path_length = nx.shortest_path_length(G)
-    print('Time:', timeit.default_timer() - start_time)
-
     keyDict = list(range(diameter + 1))
     path_lengt_dict = (dict([(key, 0) for key in keyDict]))
-    start_time = timeit.default_timer()
     for nodes_distances in shortest_path_length.values():
         for distance in nodes_distances.values():
             path_lengt_dict[distance] = path_lengt_dict[distance] + 1
-    print('Time:', timeit.default_timer() - start_time)
     print('done.')
     return path_lengt_dict
 
