@@ -94,44 +94,6 @@ def lwcc(filename):
     return len(largest_weakly_connected_component), edge_count
 
     
-
-
-
-def largest_strongly_connected_component(filename):
-    # This is only for directed graphs.
-
-    data = np.genfromtxt(filename, delimiter="\t", comments="#", dtype=int)
-    G = nx.DiGraph()
-    G.add_edges_from(data)
-    largest_strongly_connected_component = max(nx.strongly_connected_components(G), key=len)
-
-    edge_count = 0
-    for (node1, node2) in list(map(tuple, data)):
-        if node1 in largest_strongly_connected_component and node2 in largest_strongly_connected_component:
-            edge_count += 1
-
-    #print("{}".format(filename))
-    #print("\t{}\t{}".format("LSCC nodes", "LSCC edges"))
-    #print("\t{}\t{}".format(len(largest_strongly_connected_component), edge_count))
-    return len(largest_strongly_connected_component), edge_count
-
-def largest_weakly_connected_component(filename):
-    # This is only for undirected graphs.
-    data = np.genfromtxt(filename, delimiter="\t", comments="#")
-    G = nx.Graph()
-    G.add_edges_from(data)
-    largest_weakly_connected_component = max(nx.connected_components(G), key=len)
-
-    edge_count = 0
-    for (node1, node2) in list(map(tuple, data)):
-        if node1 in largest_weakly_connected_component and node2 in largest_weakly_connected_component:
-            edge_count += 1
-
-    #print("{}".format(filename))
-    #print("\t{}\t{}".format("LWCC nodes", "LWCC edges"))
-    #print("\t{}\t{}".format(len(largest_weakly_connected_component), edge_count))
-    return len(largest_weakly_connected_component), edge_count
-
 def analyze_graph(filename, directed=True):
 
     tic = time.clock()
