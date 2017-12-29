@@ -5,10 +5,12 @@ import networkx as nx
 from collections import Counter
 import time
 
+from multiprocessing import Pool
+
 
 def main():
     networks = ["wiki-Vote.txt", "soc-Epinions1.txt", "gplus_combined.txt"]
-    '''
+    
     for network in networks:
         tic = time.clock()
         s_nodes, s_edges = lscc(network)
@@ -21,10 +23,22 @@ def main():
         print("Network: {}".format(network))
         print("LSCC nodes: {}, LSCC edges: {}. Running time: {}".format(s_nodes, s_edges, s_time))
         print("LWCC nodes: {}, LWCC edges: {}. Running time: {}".format(w_nodes, w_edges, w_time))
-    '''
+    
+
+    #p = Pool(2)
+
+    #p.starmap(analyze_graph, [("wiki-Vote.txt", True), ("soc-Epinions1.txt", True), ("gplus_combined.txt", True)])
 
     analyze_graph("wiki-Vote.txt", True)
+    analyze_graph("soc-Epinions1.txt", True)
+    analyze_graph("gplus_combined.txt", True)
+
+
+
     analyze_graph("wiki-Vote.txt", False)
+    analyze_graph("soc-Epinions1.txt", False)
+    analyze_graph("gplus_combined.txt", False)
+
 
 
 
@@ -89,7 +103,6 @@ def lwcc(filename):
         line = f.readline()
 
     f.close()
-
 
     return len(largest_weakly_connected_component), edge_count
 
