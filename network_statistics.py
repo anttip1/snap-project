@@ -10,101 +10,26 @@ from multiprocessing import Pool
 
 def main():
     networks = ["wiki-Vote.txt", "soc-Epinions1.txt", "gplus_combined.txt"]
-    
-    for network in networks:
-        tic = time.clock()
-        s_nodes, s_edges = lscc(network)
-        toc = time.clock()
-        s_time = toc - tic
-        tic = time.clock()
-        w_nodes, w_edges = lwcc(network)
-        toc = time.clock()
-        w_time = toc - tic
-        print("Network: {}".format(network))
-        print("LSCC nodes: {}, LSCC edges: {}. Running time: {}".format(s_nodes, s_edges, s_time))
-        print("LWCC nodes: {}, LWCC edges: {}. Running time: {}".format(w_nodes, w_edges, w_time))
-    
 
     #p = Pool(2)
 
     #p.starmap(analyze_graph, [("wiki-Vote.txt", True), ("soc-Epinions1.txt", True), ("gplus_combined.txt", True)])
 
     analyze_graph("wiki-Vote.txt", True)
-    analyze_graph("soc-Epinions1.txt", True)
-    analyze_graph("gplus_combined.txt", True)
-
-
-
     analyze_graph("wiki-Vote.txt", False)
+
+
+    analyze_graph("soc-Epinions1.txt", True)
     analyze_graph("soc-Epinions1.txt", False)
+    
+    analyze_graph("gplus_combined.txt", True)
     analyze_graph("gplus_combined.txt", False)
 
 
 
-
-def lscc(filename):
-
-    f = open(filename)
-    line = f.readline()
-
-    G = nx.DiGraph()
-
-    while line:
-        if not line.startswith("#"):
-            nodes = line.split()
-            if nodes:
-                G.add_edge(nodes[0], nodes[1])
-        line = f.readline()
-
-    largest_strongly_connected_component = max(nx.strongly_connected_components(G), key=len)
-    edge_count = 0
-
-    f.seek(0) # reset the file back to start
-    line = f.readline()
-
-    while line:
-        if not line.startswith("#"):      
-            nodes = line.split()
-            if nodes:
-                if nodes[0] in largest_strongly_connected_component and nodes[1] in largest_strongly_connected_component:
-                    edge_count += 1
-        line = f.readline()
-
-    f.close()
-
-
-    return len(largest_strongly_connected_component), edge_count
-
-def lwcc(filename):
-    f = open(filename)
-    line = f.readline()
-
-    G = nx.Graph()
-
-    while line:
-        if not line.startswith("#"):
-            nodes = line.split()
-            if nodes:
-                G.add_edge(nodes[0], nodes[1])
-        line = f.readline()
-
-    largest_weakly_connected_component = max(nx.connected_components(G), key=len)
-    edge_count = 0
-
-    f.seek(0) # reset the file back to start
-    line = f.readline()
-
-    while line:
-        if not line.startswith("#"):
-            nodes = line.split()
-            if nodes:
-                if nodes[0] in largest_weakly_connected_component and nodes[1] in largest_weakly_connected_component:
-                    edge_count += 1
-        line = f.readline()
-
-    f.close()
-
-    return len(largest_weakly_connected_component), edge_count
+    #analyze_graph("wiki-Vote.txt", False)
+    #analyze_graph("soc-Epinions1.txt", False)
+    #analyze_graph("gplus_combined.txt", False)
 
     
 def analyze_graph(filename, directed=True):
@@ -122,18 +47,46 @@ def analyze_graph(filename, directed=True):
                 G.add_edge(nodes[0], nodes[1])
         line = f.readline()
 
-    
+    lcc = max(nx.strongly_connected_component_subgraphs(G), key=len) if directed else max(nx.connected_component_subgraphs(G), key=len)
+
+    f.seek(0) # reset the file back to start
+    line = f.readline()
+
+    lcc_nodes = lcc.nodes()
+    edge_count = 0
+
+    while line:
+        if not line.startswith("#"):      
+            nodes = line.split()
+            if nodes:
+                if nodes[0] in lcc_nodes and nodes[1] in lcc_nodes:
+                    edge_count += 1
+        line = f.readline()
+
+    f.close()
+
+    if directed:
+        print("LSCC nodes: {}, LSCC edges: {}".format(len(lcc_nodes), edge_count))
+
+    else:
+        print("LWCC nodes: {}, LWCC edges: {}".format(len(lcc_nodes), edge_count))
+
     # Rather than gathering all lengths between node pairs, because the lengths are integers, we can just accumulate 
     # them on an dict. The dict key denotes the lenght and the value the count of that length in shortest_path_length 
     # dict. 
+
+    #largest_strongly_connected_component = max(nx.strongly_connected_component_subgraphs(G), key=len)
+    
     length_counts = Counter()
     
-    for node, other_nodes in nx.shortest_path_length(G):
+    for node, other_nodes in nx.shortest_path_length(lcc):
         length_counts += Counter(other_nodes.values())
 
-    
+    print(length_counts)
     # Take the 0 away, because it just denotes the nodes length to itself.
     del length_counts[0]
+
+    print(length_counts)
 
     length_sum = 0
     max_length = max(length_counts, key=int)
