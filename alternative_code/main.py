@@ -16,11 +16,19 @@ import timeit
 def import_data(file_path):
     assert os.path.exists(
         file_path), 'File {} could not be found'.format(event_fname)
-    data = np.genfromtxt(
-        file_path,
-        delimiter='\t',
-        comments='#'
-    )
+    if file_path is "../gplus_combined.txt":
+        data = np.genfromtxt(
+            file_path,
+            #delimiter='\t',
+            delimiter=' ',
+            comments='#'
+        )
+    else:
+        data = np.genfromtxt(
+            file_path,
+            delimiter='\t',
+            comments='#'
+        )
     return data
 
 def get_dir_graph(data):
@@ -75,6 +83,7 @@ def get_values(path_lengt_dict):
         if median_count_2 <= 0:
             median_2 = distance
             median_distance = (median_1 + median_2) / 2
+            break
 
     # 2. mean distance
     distance_sum = 0
@@ -97,6 +106,7 @@ def get_values(path_lengt_dict):
         eff_diameter -= count
         if eff_diameter <= 0:
             eff_diameter = distance
+            break
 
     return median_distance, mean_distance, diameter, eff_diameter
 
@@ -124,17 +134,17 @@ if __name__ == "__main__":
                 dG, largest_strongly)
             print('done.')
 
-            #print('\nCalculating largest connected component...')
-            # G = get_undir_graph(data)
-            # largest_weakly = max(nx.connected_components(G), key=len)
-            # G, nodes, edges = get_subgraph_and_nodes_and_edges(G, largest_weakly)
-            #print('done.')
+            print('\nCalculating largest connected component...')
+            G = get_undir_graph(data)
+            largest_weakly = max(nx.connected_components(G), key=len)
+            G, nodes, edges = get_subgraph_and_nodes_and_edges(G, largest_weakly)
+            print('done.')
             
             #### Takes less than 15 sec. with 'wiki-Vote.txt'
             print('\nLargest strongly connected component for {}:'.format(network_path))
             print('Nodes:', len(d_nodes))
             print('Edges:', len(d_edges))
-            path_lengt_dict = get_path_lenghts(dG, 30)
+            path_lengt_dict = get_path_lenghts(dG, 25)
             print('path_lengt_dict:', path_lengt_dict)
             median_distance, mean_distance, diameter, eff_diameter = get_values(path_lengt_dict)
             print('1. median distance:', median_distance)
@@ -143,7 +153,14 @@ if __name__ == "__main__":
             print('4. effective diameter:', eff_diameter)
 
         #### Takes forever... (less than 5 min) with 'wiki-Vote.txt'
-            # print('\nLargest connected component:')
-            # print('Nodes:', len(nodes))
-            # print('Edges:', len(edges))
-            # get_path_lenghts(G, 10)
+            print('\nLargest connected component:')
+            print('Nodes:', len(nodes))
+            print('Edges:', len(edges))
+            path_lengt_dict = get_path_lenghts(G, 20)
+            print('path_lengt_dict:', path_lengt_dict)
+            median_distance, mean_distance, diameter, eff_diameter = get_values(
+                path_lengt_dict)
+            print('1. median distance:', median_distance)
+            print('2. mean distance:', mean_distance)
+            print('3. diameter', diameter)
+            print('4. effective diameter:', eff_diameter)
