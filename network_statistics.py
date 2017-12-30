@@ -11,13 +11,9 @@ from multiprocessing import Pool
 def main():
     networks = ["wiki-Vote.txt", "soc-Epinions1.txt", "gplus_combined.txt"]
 
-    #p = Pool(2)
-
-    #p.starmap(analyze_graph, [("wiki-Vote.txt", True), ("soc-Epinions1.txt", True), ("gplus_combined.txt", True)])
 
     analyze_graph("wiki-Vote.txt", True)
     analyze_graph("wiki-Vote.txt", False)
-
 
     analyze_graph("soc-Epinions1.txt", True)
     analyze_graph("soc-Epinions1.txt", False)
@@ -25,11 +21,6 @@ def main():
     analyze_graph("gplus_combined.txt", True)
     analyze_graph("gplus_combined.txt", False)
 
-
-
-    #analyze_graph("wiki-Vote.txt", False)
-    #analyze_graph("soc-Epinions1.txt", False)
-    #analyze_graph("gplus_combined.txt", False)
 
     
 def analyze_graph(filename, directed=True):
