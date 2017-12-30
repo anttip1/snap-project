@@ -5,18 +5,18 @@ import numpy as np
 import os
 import timeit
 
-### The location of network (not neccesary since the code looks for the files from network_data folder):
+### The location of network (not neccesary if the code looks for the files from network_data folder):
 ### ---> network_datas = os.listdir('network_data')
-# FILE_PATH_1 = "../wiki-Vote.txt"  # 7 115 nodes
-# FILE_PATH_2 = "../soc-Epinions1.txt"  # 75 879 nodes
-# FILE_PATH_3 = "../gplus_combined.txt"  # 107 614 nodes
-# FILE_PATH_4 = "../soc-pokec-relationships.txt"  # 1 632 803 nodes
+FILE_PATH_1 = "wiki-Vote.txt"  # 7 115 nodes
+FILE_PATH_2 = "soc-Epinions1.txt"  # 75 879 nodes
+FILE_PATH_3 = "gplus_combined.txt"  # 107 614 nodes
+FILE_PATH_4 = "soc-pokec-relationships.txt"  # 1 632 803 nodes
 
 
 def import_data(file_path):
     assert os.path.exists(
         file_path), 'File {} could not be found'.format(event_fname)
-    if file_path is "../gplus_combined.txt":
+    if file_path is "gplus_combined.txt":
         data = np.genfromtxt(
             file_path,
             #delimiter='\t',
@@ -111,7 +111,8 @@ def get_values(path_lengt_dict):
     return median_distance, mean_distance, diameter, eff_diameter
 
 if __name__ == "__main__":
-    network_datas = os.listdir('network_data')
+    #network_datas = os.listdir('network_data')
+    network_datas = [FILE_PATH_1, FILE_PATH_2]
     print('network_data:', network_datas)
     
     for network_path in network_datas:
@@ -153,7 +154,7 @@ if __name__ == "__main__":
             print('4. effective diameter:', eff_diameter)
 
         #### Takes forever... (less than 5 min) with 'wiki-Vote.txt'
-            print('\nLargest connected component:')
+            print('\nLargest connected component for {}:'.format(network_path))
             print('Nodes:', len(nodes))
             print('Edges:', len(edges))
             path_lengt_dict = get_path_lenghts(G, 20)

@@ -9,16 +9,16 @@ import matplotlib.pyplot as plt
 
 ### The location of network (not neccesary since the code looks for the files from network_data folder):
 ### ---> network_datas = os.listdir('network_data')
-# FILE_PATH_1 = "../wiki-Vote.txt"  # 7 115 nodes
-# FILE_PATH_2 = "../soc-Epinions1.txt"  # 75 879 nodes
-# FILE_PATH_3 = "../gplus_combined.txt"  # 107 614 nodes
-# FILE_PATH_4 = "../soc-pokec-relationships.txt"  # 1 632 803 nodes
+FILE_PATH_1 = "wiki-Vote.txt"  # 7 115 nodes
+FILE_PATH_2 = "soc-Epinions1.txt"  # 75 879 nodes
+FILE_PATH_3 = "gplus_combined.txt"  # 107 614 nodes
+FILE_PATH_4 = "soc-pokec-relationships.txt"  # 1 632 803 nodes
 
 
 def import_data(file_path):
     assert os.path.exists(
         file_path), 'File {} could not be found'.format(event_fname)
-    if file_path is "../gplus_combined.txt":
+    if file_path is "gplus_combined.txt":
         data = np.genfromtxt(
             file_path,
             #delimiter='\t',
@@ -151,7 +151,8 @@ def get_values(path_lengt_dict):
 
 
 if __name__ == "__main__":
-    network_datas = os.listdir('network_data')
+    #network_datas = os.listdir('network_data')
+    network_datas = [FILE_PATH_1, FILE_PATH_2]
     print('network_data:', network_datas)
     
     for network_path in network_datas:
